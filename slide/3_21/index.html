@@ -1,0 +1,510 @@
+import React, { useState, useEffect, useCallback } from 'react';
+import {
+Calendar, MapPin, Clock, User, Instagram,
+Wind, Activity, ChevronLeft, ChevronRight,
+ListOrdered, Utensils, MessageSquare,
+Smile, Timer, Users, BarChart3, Calculator, Target, Eye,
+Coffee, RefreshCw, Heart, ShoppingBag, Youtube,
+Music, Mic2, Globe, Dumbbell, Spa, Flag, TrendingUp, Brain
+} from 'lucide-react';
+
+const App = () => {
+const [currentSlide, setCurrentSlide] = useState(0);
+const [currentTime, setCurrentTime] = useState(new Date());
+
+useEffect(() => {
+const timer = setInterval(() => setCurrentTime(new Date()), 1000);
+return () => clearInterval(timer);
+}, []);
+
+const totalSlides = 15;
+
+const nextSlide = useCallback(() => {
+setCurrentSlide((prev) => Math.min(prev + 1, totalSlides - 1));
+}, [totalSlides]);
+
+const prevSlide = useCallback(() => {
+setCurrentSlide((prev) => Math.max(prev - 1, 0));
+}, []);
+
+useEffect(() => {
+const handleKeyDown = (event) => {
+if (event.key === 'ArrowRight' || event.key === ' ' || event.key === 'Enter') {
+nextSlide();
+} else if (event.key === 'ArrowLeft') {
+prevSlide();
+}
+};
+window.addEventListener('keydown', handleKeyDown);
+return () => window.removeEventListener('keydown', handleKeyDown);
+}, [nextSlide, prevSlide]);
+
+const images = [
+"https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?q=80&w=2070&auto=format&fit=crop", // 1: 乾杯
+"https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=2120&auto=format&fit=crop", // 2: ヨガ
+"https://images.unsplash.com/photo-1435575653489-b0873ec954e2?q=80&w=2070&auto=format&fit=crop", // 3: タイムライン
+"https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=2064&auto=format&fit=crop", // 4: アイスブレイク
+"https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2015&auto=format&fit=crop", // 5: 実践ワーク
+"https://images.unsplash.com/photo-1559339352-11d035aa65de?q=80&w=1974&auto=format&fit=crop", // 6: 休憩
+"https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=2070&auto=format&fit=crop", // 7: 食事
+"https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=2047&auto=format&fit=crop", // 8: Cafe JIN
+"https://images.unsplash.com/photo-1552072092-7f9b8d63efcb?q=80&w=2070&auto=format&fit=crop", // 9: Share (Takeda)
+"https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=2070&auto=format&fit=crop", // 10: Share (Nagahama)
+"https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2070&auto=format&fit=crop", // 11: Share (Takatsu)
+"https://images.unsplash.com/photo-1545205597-3d9d02c29597?q=80&w=2070&auto=format&fit=crop", // 12: Share (Kondo)
+"https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=2070&auto=format&fit=crop", // 13: Community
+"https://images.unsplash.com/photo-1454165833767-027ffea9e77b?q=80&w=2070&auto=format&fit=crop", // 14: Roadmap
+"https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=2070&auto=format&fit=crop", // 15: AI
+];
+
+const SlideHeader = ({ subtitle }) => (
+<header className="flex justify-between items-start">
+    <div className="border-l-4 border-amber-500 pl-5 text-left">
+        <h1 className="text-3xl font-black tracking-tighter leading-none mb-1">健美食</h1>
+        <p className="text-[10px] font-bold tracking-[0.4em] text-amber-500 uppercase">{subtitle}</p>
+    </div>
+    <div className="text-right">
+        <p className="text-3xl font-mono font-light text-white/30 tracking-widest uppercase italic leading-none">
+            {currentTime.toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit' })}
+        </p>
+    </div>
+</header>
+);
+
+return (
+<div className="w-full min-h-screen bg-neutral-900 flex flex-col items-center justify-center p-4 font-sans select-none">
+
+    {/* 16:9 スライドコンテナ */}
+    <div
+        className="relative w-full max-w-[1100px] aspect-video bg-black overflow-hidden shadow-2xl ring-1 ring-white/10 rounded-sm">
+
+        {/* 背景画像（フェードイン・アウト） */}
+        <div className="absolute inset-0 bg-cover bg-center transition-all duration-1000" style={{ backgroundImage:
+            `url(${images[currentSlide]})` }}>
+            <div className="absolute inset-0 bg-black/75" />
+        </div>
+
+        {/* コンテンツエリア：余白を十分に確保（10%パディング） */}
+        <div className="relative h-full flex flex-col justify-between p-[10%] text-white">
+
+            {/* Slide 1: Welcome */}
+            {currentSlide === 0 && (
+            <div className="h-full flex flex-col justify-between animate-in fade-in zoom-in-95 duration-700">
+                <SlideHeader subtitle="Study & Networking" />
+                <main className="flex-1 flex flex-col justify-center text-left">
+                    <p className="text-amber-500 font-bold tracking-[0.5em] text-xs uppercase mb-4 italic">Welcome to
+                        the Venue</p>
+                    <h2 className="text-7xl font-black leading-tight tracking-tighter mb-8 italic">
+                        Welcome to<br /><span
+                            className="text-amber-500 underline decoration-amber-500/20 italic">Ken-Bi-Syoku.</span>
+                    </h2>
+                    <p className="text-xl font-medium text-gray-300 italic">お飲み物を用意して、開始までリラックスしてお待ちください。</p>
+                </main>
+                <footer
+                    className="border-t border-white/10 pt-8 flex justify-between items-center text-xs font-bold tracking-widest text-gray-400 uppercase italic">
+                    <div className="flex gap-10">
+                        <span className="flex items-center gap-2">
+                            <Calendar size={16} className="text-amber-500" /> 2024.XX.XX (Fri)
+                        </span>
+                        <span className="flex items-center gap-2">
+                            <MapPin size={16} className="text-amber-500" /> Cafe JIN
+                        </span>
+                    </div>
+                    <div className="text-amber-500">#健美食</div>
+                </footer>
+            </div>
+            )}
+
+            {/* Slide 2: Yoga */}
+            {currentSlide === 1 && (
+            <div className="h-full flex flex-col justify-between animate-in slide-in-from-right-10 duration-700">
+                <SlideHeader subtitle="Opening Session" />
+                <main className="flex-1 flex items-center gap-12 text-left">
+                    <div className="flex-1">
+                        <h2 className="text-6xl font-black italic mb-6">身体を整える、<br /><span
+                                className="text-amber-500 italic">立ちヨガ。</span></h2>
+                        <p className="text-xl text-gray-300 italic">最高の学びと交流を始めるために、<br />まずは心身をリセット。</p>
+                    </div>
+                    <div className="w-80 bg-white/5 border border-white/10 p-8 rounded-3xl backdrop-blur-md">
+                        <div className="flex items-center gap-4 mb-4">
+                            <div
+                                className="w-12 h-12 bg-amber-500 rounded-full flex items-center justify-center text-black shadow-lg">
+                                <User size={24} />
+                            </div>
+                            <div>
+                                <p className="text-[10px] font-black text-amber-500 uppercase italic">Instructor</p>
+                                <p className="text-xl font-black italic">ゆか 先生</p>
+                            </div>
+                        </div>
+                        <p className="text-xs text-gray-400 font-medium leading-relaxed italic mb-4">
+                            「日常を豊かにするヨガ」をテーマに身体のコンディションを提案。</p>
+                        <div className="text-amber-500 text-xs font-bold italic flex items-center gap-2">
+                            <Instagram size={14} /> @yoga_naturallife_yuka
+                        </div>
+                    </div>
+                </main>
+            </div>
+            )}
+
+            {/* Slide 3: Timeline */}
+            {currentSlide === 2 && (
+            <div className="h-full flex flex-col justify-between animate-in fade-in duration-700">
+                <SlideHeader subtitle="Event Schedule" />
+                <main className="flex-1 flex flex-col justify-center text-left">
+                    <div className="grid grid-cols-2 gap-x-20 gap-y-8">
+                        {[
+                        { time: '18:00', title: 'オープニング', sub: 'ゆか先生の立ちヨガ' },
+                        { time: '18:05', title: 'アイスブレイク', sub: '' },
+                        { time: '18:15', title: '実践ワーク', sub: '健康経営 Topic 1&2', highlight: true },
+                        { time: '18:50', title: '食事準備', sub: '休憩', dim: true },
+                        { time: '19:00', title: '食事 ・ シェア', sub: '活動シェア会' },
+                        { time: '19:40', title: 'クロージング', sub: 'FitUni 紹介 / 次回予定' }
+                        ].map((item, i) => (
+                        <div key={i} className={`flex gap-6 items-start ${item.dim ? 'opacity-40' : '' }`}>
+                            <span className="font-mono text-xl text-amber-500 font-bold italic w-16">{item.time}</span>
+                            <div>
+                                <p className={`text-2xl font-black tracking-tight italic ${item.highlight
+                                    ? 'text-amber-500' : '' }`}>{item.title}</p>
+                                {item.sub && <p
+                                    className="text-[10px] text-gray-500 font-black uppercase italic tracking-widest">
+                                    {item.sub}</p>}
+                            </div>
+                        </div>
+                        ))}
+                    </div>
+                </main>
+            </div>
+            )}
+
+            {/* Slide 4: Icebreak */}
+            {currentSlide === 3 && (
+            <div className="h-full flex flex-col justify-between animate-in fade-in duration-700 text-left">
+                <SlideHeader subtitle="Icebreak" />
+                <main className="flex-1 flex flex-col justify-center">
+                    <h2 className="text-5xl font-black mb-8 italic">私の<span
+                            className="text-amber-500 underline decoration-amber-500/20 italic">どうでもいい健康こだわり</span>発表会
+                    </h2>
+                    <div className="bg-white/5 border-l-4 border-amber-500 p-8 rounded-r-3xl italic mb-10">
+                        <p className="text-xl font-bold italic leading-relaxed">「人に言うほどではないけど、自分がちょっと続けてる健康的なこと」</p>
+                    </div>
+                    <div className="grid grid-cols-2 gap-8 text-sm text-gray-400 font-bold italic">
+                        <p>● 白湯を飲むけど結局コーヒーも飲む</p>
+                        <p>● 階段を使う日に限って疲れてる</p>
+                        <p>● 寝る前3分ストレッチだけは続く</p>
+                        <p>● サラダを食べると“整った”と思う</p>
+                    </div>
+                </main>
+            </div>
+            )}
+
+            {/* Slide 5: Workshop */}
+            {currentSlide === 4 && (
+            <div className="h-full flex flex-col justify-between animate-in zoom-in-95 duration-700 text-left">
+                <SlideHeader subtitle="Practical Workshop" />
+                <main className="flex-1 flex flex-col justify-center">
+                    <h2 className="text-5xl font-black mb-12 italic">健康経営 <span
+                            className="text-amber-500 font-light italic">|</span> 実践ワーク</h2>
+                    <div className="grid grid-cols-2 gap-10 italic">
+                        <div
+                            className="bg-white/5 border border-white/10 p-8 rounded-3xl relative overflow-hidden group">
+                            <div className="absolute top-0 right-0 p-6 opacity-5">
+                                <Eye size={64} />
+                            </div>
+                            <p className="text-amber-500 font-black text-xs uppercase mb-4 italic italic">Topic 01</p>
+                            <h3 className="text-3xl font-black italic text-white leading-tight">企業の見えない<br />損失を知る</h3>
+                        </div>
+                        <div
+                            className="bg-white/5 border border-white/10 p-8 rounded-3xl relative overflow-hidden group">
+                            <div className="absolute top-0 right-0 p-6 opacity-5">
+                                <Calculator size={64} />
+                            </div>
+                            <p className="text-amber-500 font-black text-xs uppercase mb-4 italic italic">Topic 02</p>
+                            <h3 className="text-3xl font-black italic text-white leading-tight">あなたの能力を<br />数字に換算する
+                            </h3>
+                        </div>
+                    </div>
+                </main>
+            </div>
+            )}
+
+            {/* Slide 6: Break */}
+            {currentSlide === 5 && (
+            <div className="h-full flex flex-col justify-center items-center text-center animate-pulse-subtle">
+                <h2 className="text-8xl font-black italic tracking-tighter mb-10">Break <span
+                        className="text-amber-500 italic">&</span> Prep.</h2>
+                <div className="bg-white/5 border border-white/10 px-12 py-6 rounded-3xl italic shadow-2xl">
+                    <p className="text-xl font-bold text-amber-500 uppercase tracking-[0.3em] mb-2 italic">休憩 ・ お食事の準備
+                    </p>
+                    <p className="text-5xl font-mono font-black italic text-white uppercase italic leading-none">19:00
+                        START</p>
+                </div>
+            </div>
+            )}
+
+            {/* Slide 7: Dinner */}
+            {currentSlide === 6 && (
+            <div className="h-full flex flex-col justify-between animate-in fade-in duration-1000 text-left">
+                <SlideHeader subtitle="Meal & Connection" />
+                <main className="flex-1 flex flex-col justify-center">
+                    <h2 className="text-7xl font-black leading-tight italic mb-8">咀嚼する、<br /><span
+                            className="text-amber-500 underline decoration-amber-500/20 italic">対話する。</span></h2>
+                    <p className="text-xl font-bold italic text-gray-200 border-l-4 border-amber-500 pl-6 italic">
+                        インプットしたワークの内容をしっかり咀嚼し、<br />
+                        参加者同士でたくさんの意見交換を行ってください。
+                    </p>
+                </main>
+            </div>
+            )}
+
+            {/* Slide 8: Cafe JIN */}
+            {currentSlide === 7 && (
+            <div className="h-full flex flex-col justify-between animate-in fade-in duration-700 text-left">
+                <SlideHeader subtitle="Venue Introduction" />
+                <main className="flex-1 flex items-center gap-12">
+                    <div className="flex-1 space-y-6">
+                        <h2 className="text-6xl font-black italic tracking-tighter">Cafe JIN</h2>
+                        <p className="text-xl font-bold text-amber-500 italic">誰かの「働く」とつながる場所。</p>
+                        <p className="text-sm text-gray-400 italic">就労継続支援B型事業所が運営。店内の作品購入は、利用者の方々の応援（工賃）に繋がります。</p>
+                    </div>
+                    <div className="w-80 space-y-4">
+                        <div className="bg-red-600/10 border border-red-600/20 p-6 rounded-3xl italic">
+                            <p
+                                className="flex items-center gap-2 text-red-500 font-black text-[10px] uppercase mb-2 italic tracking-widest">
+                                <Youtube size={16} /> 都島チャンネル
+                            </p>
+                            <p className="text-xs italic leading-relaxed">都島区後援。清水明日香さんとコラボし、月に一度ここで公開収録を行っています。</p>
+                        </div>
+                    </div>
+                </main>
+            </div>
+            )}
+
+            {/* Slide 9: Share (Takeda) */}
+            {currentSlide === 8 && (
+            <div
+                className="h-full flex flex-col justify-between animate-in slide-in-from-right-10 duration-700 text-left">
+                <SlideHeader subtitle="Activity Share" />
+                <main className="flex-1 flex flex-col justify-center">
+                    <div className="grid grid-cols-12 gap-10 items-center">
+                        <div className="col-span-8">
+                            <p className="text-amber-500 font-black text-xs mb-2 italic">Presenter</p>
+                            <h2 className="text-6xl font-black italic mb-8">武田 健太</h2>
+                            <div className="bg-white/5 border-l-4 border-amber-500 p-6 rounded-r-3xl italic">
+                                <h3 className="text-3xl font-black text-amber-500 mb-2 italic">聖域ブラジリアン柔術</h3>
+                                <p className="text-xl italic italic">大阪市大正区に道場近日オープン予定！</p>
+                            </div>
+                        </div>
+                        <div className="col-span-4 flex flex-col items-center">
+                            <div
+                                className="w-48 h-48 bg-white p-4 rounded-full shadow-2xl flex items-center justify-center">
+                                <img src="uploaded:IMG_3035 - Kenta Takeda.jpeg-1a0d91bc-8385-4257-a9e7-55b4f72a8c08"
+                                    alt="Logo" className="w-full h-full object-contain" />
+                            </div>
+                            <p className="mt-4 font-mono text-[10px] font-bold text-gray-500 italic">seiikibjj.com</p>
+                        </div>
+                    </div>
+                </main>
+            </div>
+            )}
+
+            {/* Slide 10: Share (Nagahama) */}
+            {currentSlide === 9 && (
+            <div
+                className="h-full flex flex-col justify-between animate-in slide-in-from-right-10 duration-700 text-left">
+                <SlideHeader subtitle="Activity Share" />
+                <main className="flex-1 flex flex-col justify-center">
+                    <p className="text-amber-500 font-black text-xs mb-2 italic">Presenter</p>
+                    <h2 className="text-6xl font-black italic mb-8">長濱 訓由</h2>
+                    <div className="grid grid-cols-2 gap-10 italic">
+                        <div className="bg-red-600/10 border-l-4 border-red-600 p-6 rounded-r-3xl">
+                            <h3 className="text-3xl font-black mb-3 italic italic italic">アゲトレ！</h3>
+                            <p className="text-lg italic font-medium">YouTubeで自宅を最高のジムに。<br />企業の健康意識向上をサポート。</p>
+                        </div>
+                        <div className="flex flex-col justify-center gap-4">
+                            <p className="text-sm font-bold text-gray-400 italic">Personal Gym STARTLINE</p>
+                            <div className="flex items-center gap-3 text-red-500 font-black text-xs italic italic">
+                                <Youtube /> @agetore9244
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+            )}
+
+            {/* Slide 11: Share (Takatsu) */}
+            {currentSlide === 10 && (
+            <div
+                className="h-full flex flex-col justify-between animate-in slide-in-from-right-10 duration-700 text-left">
+                <SlideHeader subtitle="Activity Share" />
+                <main className="flex-1 flex flex-col justify-center">
+                    <p className="text-amber-500 font-black text-xs mb-2 italic">Presenter</p>
+                    <h2 className="text-6xl font-black italic mb-8">高津 諭</h2>
+                    <div className="space-y-6">
+                        <div className="bg-white/5 border-l-4 border-amber-500 p-6 rounded-r-3xl italic">
+                            <h3 className="text-3xl font-black text-amber-500 mb-2 italic">LEANBODY (S)TYLE</h3>
+                            <p className="text-lg italic italic italic italic">神戸 ・ 大阪 ・ オンラインで展開</p>
+                        </div>
+                        <div
+                            className="flex gap-10 italic font-black italic italic uppercase tracking-widest text-sm text-gray-400">
+                            <span className="flex items-center gap-2 italic">
+                                <Calendar size={16} className="text-amber-500" /> 3.29 ストレッチセミナー
+                            </span>
+                            <span className="flex items-center gap-2 italic">
+                                <Calendar size={16} className="text-amber-500" /> 3.31 無料セミナー
+                            </span>
+                        </div>
+                    </div>
+                </main>
+            </div>
+            )}
+
+            {/* Slide 12: Share (Kondo) */}
+            {currentSlide === 11 && (
+            <div
+                className="h-full flex flex-col justify-between animate-in slide-in-from-right-10 duration-700 text-left">
+                <SlideHeader subtitle="Activity Share" />
+                <main className="flex-1 flex flex-col justify-center">
+                    <p className="text-amber-500 font-black text-xs mb-2 italic">Presenter</p>
+                    <h2 className="text-6xl font-black italic mb-8 italic">近藤 ちひろ</h2>
+                    <div className="grid grid-cols-12 gap-8 italic">
+                        <div className="col-span-7">
+                            <h3
+                                className="text-4xl font-black text-amber-500 leading-tight italic underline decoration-amber-500/20 mb-6 italic">
+                                Viva Yourself.</h3>
+                            <p className="text-base italic leading-relaxed font-medium">心と身体を整え、人生のエネルギーを高めるウェルネスセミナー。
+                            </p>
+                        </div>
+                        <div className="col-span-5 bg-white/5 border border-white/10 p-6 rounded-3xl italic">
+                            <p
+                                className="text-xs font-black uppercase text-gray-500 mb-4 italic tracking-widest italic">
+                                Request</p>
+                            <p className="text-xs font-bold leading-relaxed">健康経営に関心のある企業様へのご紹介・シェアをぜひお願いします！</p>
+                        </div>
+                    </div>
+                </main>
+            </div>
+            )}
+
+            {/* Slide 13: Fitness University */}
+            {currentSlide === 12 && (
+            <div className="h-full flex flex-col justify-between animate-in zoom-in-95 duration-700 text-left">
+                <SlideHeader subtitle="About Community" />
+                <main className="flex-1 flex flex-col justify-center space-y-12 italic">
+                    <h2 className="text-7xl font-black italic tracking-tighter">FITNESS UNIVERSITY</h2>
+                    <div className="grid grid-cols-2 gap-12 italic">
+                        <div className="space-y-4">
+                            <div
+                                className="flex items-center gap-2 text-amber-500 uppercase font-black text-xs italic tracking-widest italic">
+                                <Flag size={18} /> Mission
+                            </div>
+                            <p className="text-2xl font-black leading-tight italic italic">
+                                フィットネスの力で、<br />社会の健康（国力向上）を実現する。</p>
+                        </div>
+                        <div className="space-y-4 italic">
+                            <div
+                                className="flex items-center gap-2 text-amber-500 uppercase font-black text-xs italic tracking-widest italic">
+                                <Eye size={18} /> Vision
+                            </div>
+                            <p className="text-2xl font-black leading-tight italic italic">
+                                従事者が社会的専門職として<br />認知される世界をつくる。</p>
+                        </div>
+                    </div>
+                </main>
+            </div>
+            )}
+
+            {/* Slide 14: Roadmap */}
+            {currentSlide === 13 && (
+            <div
+                className="h-full flex flex-col justify-between animate-in slide-in-from-bottom-8 duration-700 text-left">
+                <SlideHeader subtitle="Future Roadmap" />
+                <main className="flex-1 flex flex-col justify-center italic">
+                    <h2 className="text-5xl font-black mb-10 italic">コミュニティの今後の展開</h2>
+                    <div className="grid grid-cols-4 gap-4 h-[45%] italic italic">
+                        {[
+                        { step: '01', role: '面白さと入口', content: 'フリマ / かふぇ' },
+                        { step: '02', role: '共創と役割化', content: 'コラボ / AI研究会' },
+                        { step: '03', role: '健康経営実装', content: '健美食', highlight: true },
+                        { step: '04', role: '社会実装の入口', content: 'マルシェ' }
+                        ].map((item, i) => (
+                        <div key={i} className={`p-6 rounded-2xl border-b-4 flex flex-col justify-between transition-all
+                            italic ${item.highlight ? 'bg-amber-500/10 border-amber-500' : 'bg-white/5 border-white/20'
+                            }`}>
+                            <span className="text-[10px] font-black text-amber-500 uppercase italic">Step
+                                {item.step}</span>
+                            <div>
+                                <p className="text-[10px] font-bold text-gray-500 uppercase mb-1 italic italic">
+                                    {item.role}</p>
+                                <p className="text-xl font-black italic italic leading-tight">{item.content}</p>
+                            </div>
+                        </div>
+                        ))}
+                    </div>
+                </main>
+            </div>
+            )}
+
+            {/* Slide 15: Next Schedule */}
+            {currentSlide === 14 && (
+            <div className="h-full flex flex-col justify-between animate-in fade-in duration-1000 text-center italic">
+                <SlideHeader subtitle="Next Session" />
+                <main className="flex-1 flex flex-col justify-center italic italic">
+                    <p className="text-amber-500 font-black tracking-[0.5em] text-xs uppercase mb-4 italic italic">
+                        Upcoming Event</p>
+                    <h2 className="text-4xl font-black italic mb-10 italic italic">フィットネスと<span
+                            className="text-amber-500 italic mx-2 italic italic">AIの可能性</span></h2>
+                    <div
+                        className="bg-white/5 border border-white/10 p-10 rounded-3xl backdrop-blur-md inline-block mx-auto italic italic">
+                        <p className="text-5xl font-black italic tracking-tighter mb-4 italic italic">4月19日<span
+                                className="text-2xl ml-2 italic italic">(日)</span></p>
+                        <p className="text-3xl font-mono font-bold text-amber-500 italic italic">18:00 - 20:00</p>
+                        <div className="h-px bg-white/10 my-8 italic italic"></div>
+                        <p className="text-lg font-bold italic italic italic text-gray-300">
+                            時間と思考の余裕を生み出すAIの活用方法について
+                        </p>
+                    </div>
+                </main>
+            </div>
+            )}
+
+        </div>
+
+        {/* スライド外ナビゲーション（ホバー時に目立つように） */}
+        <div className="absolute bottom-4 right-4 flex gap-2 z-50">
+            <button onClick={prevSlide} disabled={currentSlide===0}
+                className="p-2 bg-white/10 hover:bg-white/20 disabled:opacity-10 rounded-full text-white transition-all shadow-xl active:scale-90">
+                <ChevronLeft size={20} />
+            </button>
+            <button onClick={nextSlide} disabled={currentSlide===totalSlides - 1}
+                className="p-2 bg-white/10 hover:bg-white/20 disabled:opacity-10 rounded-full text-white transition-all shadow-xl active:scale-90">
+                <ChevronRight size={20} />
+            </button>
+        </div>
+    </div>
+
+    {/* ガイドと進捗 */}
+    <div className="mt-8 flex gap-6 text-gray-500 text-[10px] font-black tracking-widest uppercase items-center italic">
+        <div className="flex items-center gap-2">
+            <span
+                className="px-2 py-1 bg-neutral-800 rounded border border-white/10 text-white font-mono tracking-normal">SPACE
+                / →</span>
+            <span>Next</span>
+        </div>
+        <div className="h-4 w-px bg-white/10 mx-2" />
+        <div className="flex gap-2">
+            {Array.from({ length: totalSlides }).map((_, idx) => (
+            <div key={idx} className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${currentSlide===idx
+                ? 'bg-amber-500 w-6' : 'bg-neutral-700' }`} />
+            ))}
+        </div>
+        <span className="ml-2 text-amber-500 opacity-60 font-mono italic">Slide {currentSlide + 1} /
+            {totalSlides}</span>
+    </div>
+
+    <style dangerouslySetInnerHTML={{ __html: ` @keyframes pulse-subtle { 0%, 100% { transform: scale(1); } 50% {
+        transform: scale(1.02); } } .animate-pulse-subtle { animation: pulse-subtle 4s infinite ease-in-out; } `}} />
+</div>
+);
+};
+
+export default App;
