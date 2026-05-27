@@ -774,6 +774,19 @@
         .font-bold { font-weight: 700; }
         .relative { position: relative; }
         .overflow-hidden { overflow: hidden; }
+
+        /* =====================
+           Mobile line-break helpers
+        ===================== */
+        .br-sp { display: none; }
+        .br-pc { display: inline; }
+        @media (max-width: 640px) {
+            .br-sp { display: inline; }
+            .br-pc { display: none; }
+            .section-title { font-size: 1.15rem; }
+            .values-title  { font-size: 0.975rem; }
+            .hero-title    { font-size: 2.5rem; }
+        }
     </style>
 </head>
 
@@ -794,8 +807,8 @@
                     学ぶだけで終わらない。<br>次の一歩が見えてくる場へ。
                 </p>
                 <p class="hero-sub">
-                    やりたいことはある。でも、ひとりで考えていると動けなくなる。<br>
-                    だからこそ健美食は、知識を増やすだけでなく、考えを整理し、<br>
+                    やりたいことはある。でも、ひとりで考えていると動けなくなる。<br class="br-pc">
+                    だからこそ健美食は、知識を増やすだけでなく、考えを整理し、<br class="br-pc">
                     「これならやってみたい」と思えるきっかけに出会う場をつくっています。
                 </p>
             </div>
@@ -815,7 +828,7 @@
         <div class="container-4xl">
             <div class="text-center mb-10">
                 <span class="section-label">Pain Points</span>
-                <h2 class="section-title mb-8 text-white">なぜ人は立ち止まってしまうのか？</h2>
+                <h2 class="section-title mb-8 text-white">なぜ人は立ち止まって<br class="br-sp">しまうのか？</h2>
             </div>
 
             <div class="body-text text-gray-300 space-y-6 leading-loose text-left" style="max-width:48rem;margin:0 auto;">
@@ -827,8 +840,8 @@
                 <p>さらに、ひとりで考え続けていると、視点が広がらず、同じところで悩み続けてしまうことも少なくありません。</p>
                 <div class="accent-quote">
                     <p>
-                        だから必要なのは、新しい知識だけではなく、<br>
-                        考えが整理され、視点が広がり、<br>
+                        だから必要なのは、新しい知識だけではなく、<br class="br-pc">
+                        考えが整理され、視点が広がり、<br class="br-pc">
                         <span class="text-accent">「少しやってみよう」と思える状態になること</span>です。
                     </p>
                 </div>
@@ -910,8 +923,8 @@
                 <div class="benefit-item benefit-last"><div class="benefit-dot benefit-dot-glow"></div><span class="benefit-text benefit-text-highlight">やってみたいことが現実に近づく</span></div>
             </div>
             <div class="benefit-closing">
-                <p>これらを大切にしているのは、その場の満足感ではなく、<br>終わったあとに小さな変化が残ることが重要だからです。</p>
-                <p class="font-bold text-accent" style="font-size:1rem;margin-top:1rem;">「来てよかった」で終わるのではなく、<br>「これをやってみよう」が残る場を目指しています。</p>
+                <p>これらを大切にしているのは、その場の満足感ではなく、<br class="br-pc">終わったあとに小さな変化が残ることが重要だからです。</p>
+                <p class="font-bold text-accent" style="font-size:1rem;margin-top:1rem;">「来てよかった」で終わるのではなく、<br class="br-pc">「これをやってみよう」が<br class="br-sp">残る場を目指しています。</p>
             </div>
         </div>
     </section>
@@ -923,7 +936,7 @@
             <!-- ヘッダー -->
             <div class="text-center mb-14">
                 <span class="section-label">Collaboration × Theme</span>
-                <h2 class="section-title text-white mt-4">パーソナルトレーナーの寺子屋<span class="text-accent"> × 健美食</span></h2>
+                <h2 class="section-title text-white mt-4">パーソナルトレーナーの<br class="br-sp">寺子屋<span class="text-accent"> × 健美食</span></h2>
                 <p class="text-gray-400 body-text leading-relaxed" style="max-width:42rem;margin:1rem auto 0;">
                     ボディワークと食・栄養の専門家が交わる、コラボ開催回。<br>
                     今回のテーマは <strong style="color:var(--accent);">「整える」</strong>。体・食・心のそれぞれの視点から、整えることを一緒に深めます。
@@ -1109,7 +1122,7 @@
             </div>
 
             <div class="closing-border">
-                <h2 class="section-title text-white leading-snug mb-6">「自分にも、まだできることがあるかもしれない」</h2>
+                <h2 class="section-title text-white leading-snug mb-6">「自分にも、まだできることが<br class="br-sp">あるかもしれない」</h2>
                 <div class="text-gray-300 body-text mb-10 leading-relaxed space-y-4" style="max-width:36rem;margin-left:auto;margin-right:auto;">
                     <p>そんな感覚を持ち帰りたい方へ。</p>
                     <p>新しい学びと出会いの中で、次の一歩のきっかけを一緒に見つけていきましょう。</p>
